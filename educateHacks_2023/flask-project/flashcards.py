@@ -48,7 +48,9 @@ def generate_response(topic, num, max_tokens):
     return response
 
 def parse(text, num):
+    print(text)
     text = text.replace('\n','')
+    # text.translate({ord('\n'): None})
     text = text.lstrip("1. ")
     
     flashcards = []
