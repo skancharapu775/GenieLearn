@@ -2,7 +2,6 @@
 from flask import Flask, request
 from flask_cors import CORS
 import json
-import flashcards
 
 app = Flask(__name__)
 CORS(app)
@@ -22,56 +21,16 @@ def flashcards ():
     # we can access the data like this: request.json['name']
     # use this function for now, and put the ML stuff in the == 'POST' block
     #I can work on sending the data back to the client when we meet up tommorow
-    
+
+    global flashcard_number
+    global flashcard_topic
+
     if request.method == 'POST':
         # runs when data is sent
-
         print(request.json)
         flashcard_number = int(request.json['number'])
         flashcard_topic = request.json['topic']
-
-        """
-        --SAMPLE FLASHCARD STRUCTURE--
-        flashcard = {
-            "id": 1,
-            "question": 'What is 2 + 2?',
-            "answer": '4',
-            "options": [
-                '2',
-                '3',
-                '4',
-                '5'
-            ]
-        }
-
-        then you have to return function like this
-        
-        FLASHCARDS = {'response_code': 0,'results': [ flashcard1 , flashcard2, etc]}
-        return(json.dumps(FLASHCARDS))
-        """
-
-        print(request.json)
-        
-        num = flashcard_number
-        topic = flashcard_topic
-        
-        text = flashcards.generate_response(topic, num, 200)
-        cards = flashcards.parse(text, num)
-
-        ALLCARDS = []
-
-        for i in range(0, len(cards)):
-            pair = cards[i]
-            card = {}
-            card["id"] = i + 1
-            card["question"] = pair[0]
-            card["answer"] = pair[1]
-            card["options"] = ["Wrong", "Incorrect", "False"]
-        
-            ALLCARDS.append(card)
-        
-        FLASHCARDS = {'response_code': 0, 'results': ALLCARDS}
-        return (json.dumps(FLASHCARDS)) 
+        return {"message": "data received"} # input data 
 
     if request.method == 'GET':
         one = {
@@ -104,7 +63,6 @@ def flashcards ():
         print(FLASHCARDS)
         flashcard_number = 0
         return(json.dumps(FLASHCARDS))
-
 
     
 

@@ -1,5 +1,4 @@
 import openai
-import os
 import keys
 
 # Starting Steps
@@ -36,7 +35,7 @@ def generate_response(topic, num, max_tokens):
         max_tokens=max_tokens,
         messages = [{"role":"user", "content": prompt}]
     )
-    
+
     '''
     response = openai.Completion.create(
         model=model,
@@ -53,26 +52,30 @@ def parse(text, num):
     text = text.lstrip("1. ")
     
     flashcards = []
-    for i in range(2, num + 1):
+    for i in range(2, (num + 1)):
         seperator = str(i) + ". "
-        if (i != num + 1):
-            texts = text.split(seperator)
-            text = texts[1]
-            phrase = texts[0]
-        else:
-            phrase = texts[1]
+
+        texts = text.split(seperator)
+        text = texts[1]
+        phrase = texts[0]
 
         card = phrase.split(" -> ")
         if len(card) != 0:
             flashcards.append(card)
         
+        if i == num:
+            phrase = texts[1]
+            card = phrase.split(" -> ")
+            if len(card) != 0:
+                flashcards.append(card)
+        
     return flashcards
 
-response = generate_response("Spanish School Vocab", 6, 200)
+response = generate_response("Spanish School Vocab", 10, 600)
 raw_text = response["choices"][0]["message"]["content"] 
 # text instead of content for gpt-3.0 models
 # raw_text = "1. Profesor -> Teacher\n2. Estudiante -> Student\n3. Clase -> Class\n4. Tarea -> Homework\n5. Examen -> Exam\n6. Escuela -> School"
-print(parse(raw_text, 6))
+print(parse(raw_text, 10))
 #print(parse(raw_text))
 
 

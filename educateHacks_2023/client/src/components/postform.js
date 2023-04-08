@@ -6,7 +6,7 @@ class PostForm extends Component {
         super(props);
 
         this.state = {
-            name: '',
+            number: '',
             topic: ''
         };
     }
@@ -30,13 +30,13 @@ class PostForm extends Component {
     }
 
     render() {
-        const { name, topic } = this.state;
+        const { number, topic } = this.state;
         return (
             <div>
                 <form onSubmit={this.submitHandler}>
                     <label>
-                        Name:
-                        <input type="text" name="name" value={name} onChange={this.changeHandler} />
+                    Number:
+                        <input type="text" name="number" value={number} onChange={this.changeHandler} />
                     </label>
                     <label>
                         Topic:
