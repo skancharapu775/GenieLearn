@@ -3,12 +3,16 @@ from flask import Flask, request
 from flask_cors import CORS
 import json
 from flashcards import *
+from worksheets import *
+from deepai import *
 
 app = Flask(__name__)
 CORS(app)
 
 flashcard_number = 0
 flashcard_topic = ''
+number_problems = 0
+worksheet_topic = ''
 
 # flask function that SENDS data to the client
 @app.route('/members')
@@ -56,9 +60,9 @@ def flashcards ():
         num = flashcard_number
         topic = flashcard_topic
         
-        response = generate_response(topic, num, 200)
+        response = generate_card_response(topic, num, num * 50)
         text = response["choices"][0]["message"]["content"]
-        cards = parse(text, num)
+        cards = card_scraper(text, num)
 
         ALLCARDS = []
 
@@ -71,43 +75,80 @@ def flashcards ():
             card["options"] = []
         
             ALLCARDS.append(card)
-        
+
         FLASHCARDS = {'response_code': 0, 'results': ALLCARDS}
         return (json.dumps(FLASHCARDS)) 
+
+# worksheet requests
+@app.route('/worksheets', methods=['GET', 'POST'])
+def worksheets ():
+
+    global number_problems 
+    global worksheet_topic
+
+    if request.method == "POST":
+
+        """
+            -- SAMPLE PROBLEM STRUCTURE --
+            PROBLEM AND ANSWER ID MATCH
+            {
+                problem = {
+                "id": 1,
+                "question": 'What is 2 + 2?',
+                "answer_id": '1',
+                "options": []
+                }
+            }
+            
+            -- SAMPLE ANSWER STRUCTURE
+            PROBLEM AND ANSWER ID MATCH
+            {
+                answer = {
+                "id": 1,
+                "question_id": '1',
+                "answer": '5',
+                "options": []
+                }
+            }
+        """
+
+        number_problems = int(request.json['number'])
+        worksheet_topic = request.json['topic']
+
+        return ('', 204)
+      
+    if request.method == "GET":
+        num = number_problems
+        topic = worksheet_topic
         
-        '''one = {
-            "id": 1,
-            "question": 'What is 2 + 2?',
-            "answer": '4',
-            "options": [
-                '2',
-                '3',
-                '4',
-                '5'
-            ]
-        }
-        two = {
-            "id": 2,
-            "question": 'questions',
-            "answer": 'yes',
-            "options": [
-                'yes',
-                'no',
-            ]
-        }
+        response = generate_sheet_response(topic, num, num * 50)
+        text = response["choices"][0]["message"]["content"] 
+        problem_pairs = problem_scraper(text, num)
 
-        #this is the format for rendering the flashcards
-        FLASHCARDS = {'response_code': 0,'results': []}
-        if flashcard_number == 1:
-            FLASHCARDS = {'response_code': 0,'results': [one]}
-        elif flashcard_number == 2:
-            FLASHCARDS = {'response_code': 0,'results': [one, two]}
-        print(FLASHCARDS)
-        flashcard_number = 0
-        return(json.dumps(FLASHCARDS))'''
+        PROBLEMS = []
+        ANSWERS = []
 
+        for i in range(0, len(problem_pairs)):
+            pair = problem_pairs[i]
+            problem = {}
+            problem["id"] = i + 1
+            problem["question"] = pair[0]
+            problem["answer_id"] = i + 1
+            problem["options"]= []
+        
+            PROBLEMS.append(problem)
 
-    
+            answer = {}
+            answer["id"] = i + 1
+            answer["question_id"] = i + 1
+            problem["answer"] = pair[1]
+            problem["options"] = []
+
+            ANSWERS.append(answer)
+
+        PAIRS = {'response_code': 0, 'results': [PROBLEMS, ANSWERS]}
+        print(PAIRS)
+        return (json.dumps(PAIRS)) 
 
 if __name__ == '__main__':
     app.run(debug=True)
