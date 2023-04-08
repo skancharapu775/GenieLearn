@@ -71,7 +71,7 @@ export function About() {
               Worksheets
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                For exams which dont require memorization, hands on experience is the best way to prepare. On the worksheets page, students can generate practice problems for their upcoming test
+                For exams which dont require memorization, hands on experience is the best way to prepare. On the worksheets page, students can generate practice problems for their upcoming tests, or teachers can generate worksheets for their students. 
             </Typography>
           </Container>
         </div>
