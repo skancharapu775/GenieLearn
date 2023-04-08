@@ -20,51 +20,59 @@ Flashcard format:
 
 openai.api_key = keys.API_KEY
 chat_models = ["gpt-3.5-turbo"]
-completion_models = ["davinci", "curie", "babbage", "ada"]
+completion_models = ["davinci", "curie", "babbage", "ada", "babbage:ft-personal:babbage-4-2023-04-08-13-57-22"]
 
 
-def generate_response(topic, num):
+def generate_response(topic, num, max_tokens):
     beg = "Create" + str(num) + " flash cards about "
-    end = ",format of Concept : Definiton"
+    end = "in the format of Vocab word -> Answer"
     prompt = beg + topic + end
-    model = completion_models[2]
+    model = chat_models[0]
 
-    '''
+    
     response = openai.ChatCompletion.create(
         model=model,
         temperature=0.6,
-        max_tokens=200,
+        max_tokens=max_tokens,
         messages = [{"role":"user", "content": prompt}]
     )
-    '''
     
+    '''
     response = openai.Completion.create(
         model=model,
         prompt=prompt,
         temperature=0.6,
-        max_tokens=50,
+        max_tokens=300,
     )
-    
+    '''
+
     return response
 
-def parse(text):
-    text = text.lstrip(" ")
-    #for i in range(3):
-        #p = "\n" + str(i + 1)
-        #text.strip()
+def parse(text, num):
+    text = text.replace('\n','')
+    text = text.lstrip("1. ")
+    
+    flashcards = []
+    for i in range(2, num + 1):
+        seperator = str(i) + ". "
+        if (i != num + 1):
+            texts = text.split(seperator)
+            text = texts[1]
+            phrase = texts[0]
+        else:
+            phrase = texts[1]
 
-    final_text = text.strip()
+        card = phrase.split(" -> ")
+        if len(card) != 0:
+            flashcards.append(card)
+        
+    return flashcards
 
-    flashcards = {}
-
-    return text
-
-response = generate_response("Spanish Vocab", 3)
-print(response)
-# raw_text = response["choices"][0]["content"] 
+response = generate_response("Spanish School Vocab", 6, 200)
+raw_text = response["choices"][0]["message"]["content"] 
 # text instead of content for gpt-3.0 models
-# raw_text = "1. Concept: Hola\nDefinition: Hello\n\n2. Concept: Adi\u00f3s\nDefinition: Goodbye\n\n3. Concept: Gracias\nDefinition: Thank you"
-# print(parse(raw_text))
+# raw_text = "1. Profesor -> Teacher\n2. Estudiante -> Student\n3. Clase -> Class\n4. Tarea -> Homework\n5. Examen -> Exam\n6. Escuela -> School"
+print(parse(raw_text, 6))
 #print(parse(raw_text))
 
 
