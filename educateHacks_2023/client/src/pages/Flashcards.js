@@ -3,8 +3,10 @@ import PostForm from '../components/postform.js'
 import React, { useState, useEffect, useRef } from 'react'
 import Flashcard from '../components/flashcard.js'
 import FlashcardList from '../components/FlashcardList.js'
+import { Box, TextField, Button, Typography } from '@mui/material'
 import axios from 'axios'
 import '../Style_Cards.css'
+import '../App.css'
 
 
 export function Flashcards() {
@@ -63,23 +65,49 @@ export function Flashcards() {
     
     <>
     <Header />
-    
-            <div>
-                <form onSubmit={submitHandler}>
-                    <label>
-                    Number:
-                        <input type="text" name="number" value={post.number} onChange={changeHandler} />
-                    </label>
-                    <label>
-                        Topic:
-                        <input type="text" name="topic" value={post.topic} onChange={changeHandler} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
+            <h3></h3>
+            <div className="flashcard-form">
+              <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="text.primary"
+                gutterBottom
+                fontFamily={''}
+              >
+                Generate Flashcards with AI
+              </Typography>
+              <form onSubmit={submitHandler} noValidate autoComplete="off"> 
+                  <TextField
+                  margin="normal"
+                  value={post.number}
+                  onChange={changeHandler}
+                  required
+                  fullWidth
+                  id="number"
+                  label="Number"
+                  name="number"
+                  autoComplete="off"
+                  />
+                  <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="topic"
+                  label="Topic"
+                  name="topic"
+                  value={post.topic}
+                  onChange={changeHandler}
+                  autoComplete="off"
+                  />
+                  <Box textAlign='center'>
+                      <Button variant='contained' type="submit" >Generate</Button>
+                  </Box>
+              </form>
+              <div className="container">
+                <FlashcardList flashcards={flashcards} />
+              </div>
             </div>
-      <div className="container">
-        <FlashcardList flashcards={flashcards} />
-      </div>
     </>
   );
 }

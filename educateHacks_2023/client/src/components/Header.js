@@ -11,7 +11,7 @@ export default function Header() {
                 <AppBar position='static'>
                     <Toolbar>
                         <IconButton size='large' edge='start' color='inherit' aria-label='logo'>
-                            <SchoolIcon />
+                            <SchoolIcon href="/home" />
                         </IconButton>
                         <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                             GenieLearn
@@ -20,6 +20,7 @@ export default function Header() {
                             <Button color='inherit' href='/home'>Home</Button>
                             <Button color='inherit' href='/about'>About</Button>
                             <Button color='inherit' href='/flashcards'>Flashcards</Button>
+                            <Button color='inherit' href='/worksheets'>Worksheets</Button>
                         </Stack>
                     </Toolbar>
                 </AppBar>
