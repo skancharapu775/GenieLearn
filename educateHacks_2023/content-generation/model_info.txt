@@ -1,0 +1,7 @@
+OpenAI ChatGPT model tests
+
+GPT-4
+- Can specify intstructions
+- Occasionally stops before 50
+- Inputs before set generation reccomended
+- 8k context
