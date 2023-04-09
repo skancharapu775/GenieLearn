@@ -58,8 +58,7 @@ def problem_scraper(text, num):
     text = text.replace('\n','')
     char_sep = text[1]
     
-    text.lstrip("1" + char_sep + " ")
-    text = text.lstrip("1. ")
+    text = text.lstrip("1" + char_sep + " ")
 
     problem_pairs = []
     for i in range(2, (num + 1)):
@@ -94,10 +93,11 @@ def problem_scraper(text, num):
         
     return problem_pairs
 
-
+'''
 problems = ["1+1", "2+2", "5 x 4", "10/2", "1/0"]
 answers = ["2", "4", "20", "5", "undefined"]
 print("Successful: " + createpdf(problems, answers, "Spanish Food"))
+'''
 
 '''
 response = generate_sheet_response("Math", 2, 100)

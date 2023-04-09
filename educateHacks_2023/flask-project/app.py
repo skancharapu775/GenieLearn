@@ -60,7 +60,7 @@ def flashcards ():
         num = flashcard_number
         topic = flashcard_topic
         
-        response = generate_card_response(topic, num, num * 50)
+        response = generate_card_response(topic, num, num * 100)
         text = response["choices"][0]["message"]["content"]
         cards = card_scraper(text, num)
 

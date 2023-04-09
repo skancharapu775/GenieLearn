@@ -45,11 +45,13 @@ def generate_card_response(topic, num, max_tokens):
 
 def card_scraper(text, num):
     text = text.replace('\n','')
-    text = text.lstrip("1. ")
+    char_sep = text[1]
+    
+    text = text.lstrip("1" + char_sep + " ")
     
     flashcards = []
     for i in range(2, (num + 1)):
-        seperator = str(i) + ". "
+        seperator = str(i) + char_sep + " "
 
         texts = text.split(seperator)
         text = texts[1]
