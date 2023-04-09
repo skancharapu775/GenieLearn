@@ -1,10 +1,10 @@
 #boilerplate for testing
-from flask import Flask, request
+from flask import Flask, request, send_file
 from flask_cors import CORS
 import json
 from flashcards import *
 from worksheets import *
-# from deepai import *
+from deepai import *
 
 app = Flask(__name__)
 CORS(app)
@@ -60,7 +60,7 @@ def flashcards ():
         num = flashcard_number
         topic = flashcard_topic
         
-        response = generate_card_response(topic, num, num * 100)
+        response = generate_card_response(topic, num, 30 + num * 100)
         text = response["choices"][0]["message"]["content"]
         cards = card_scraper(text, num)
 
@@ -71,6 +71,7 @@ def flashcards ():
             card = {}
             card["id"] = i + 1
             card["question"] = pair[0]
+            print(cards[i])
             card["answer"] = pair[1]
             card["options"] = []
         
@@ -132,7 +133,7 @@ def worksheets ():
         topic = worksheet_topic
         
 
-        response = generate_sheet_response(topic, num, num * 100)
+        response = generate_sheet_response(topic, num, 30 + num * 100)
         text = response["choices"][0]["message"]["content"] 
         problem_pairs = problem_scraper(text, num)
 
@@ -156,10 +157,35 @@ def worksheets ():
             problem["options"] = []
 
             ANSWERS.append(answer)
-
+        
+        createpdf(PROBLEMS, ANSWERS, topic)
         PAIRS = {'response_code': 0, 'results': [PROBLEMS, ANSWERS]}
         print(PAIRS)
         return (json.dumps(PAIRS)) 
 
+
+@app.route('/pdf', methods=['GET'])
+def pdf():
+
+    global worksheet_topic
+    if request.method == 'GET':
+        with open('Practice_Worksheet.pdf', 'rb') as static_file:
+            return send_file('Practice_Worksheet.pdf')
+        
+@app.route('/deepai_image', methods=['GET'])
+def pdf():
+
+    global worksheet_topic
+    if request.method == 'GET':
+        topic = worksheet_topic
+        json_response = generate_image(topic)
+        return(json_response)
+
+        # response format = {
+        # 'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9'
+        # 'output_url': 'https://api.deepai.org/job-view-file/e1a85509-1386-4f8d-9005-5d8f2ba659c9/outputs/output.jpg'
+        # }
+    
+    
 if __name__ == '__main__':
     app.run(debug=True)

@@ -51,22 +51,22 @@ export function Worksheets() {
     
       //create function to handle submit
       const submitHandler = e => {
-        setWorksheet(SAMPLE_WORKSHEET)
+        //setWorksheet(SAMPLE_WORKSHEET)
         // console.log('test')
         e.preventDefault()
-        // console.log(post)
-        // axios.post('http://localhost:5000/worksheets', post)
-        // .then(res => {
-        //     axios.get('http://localhost:5000/worksheets')
-        //     .then(res => {
-        //     console.log("This is the output from the server:")
-        //     console.log(res.data["results"]) //this is in same format as SAMPLE_WORKSHEET
-        //     setWorksheet(res.data["results"])
-        //     }, [])
-        // })
-        // .catch(err => {
-        //   console.log(err)
-        // })
+        console.log(post)
+        axios.post('http://localhost:5000/worksheets', post)
+        .then(res => {
+            axios.get('http://localhost:5000/worksheets')
+            .then(res => {
+            console.log("This is the output from the server:")
+            console.log(res.data["results"]) //this is in same format as SAMPLE_WORKSHEET
+            setWorksheet(res.data["results"])
+            }, [])
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
 
   return (

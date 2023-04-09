@@ -12,6 +12,7 @@ import '../App.css'
 export function Flashcards() {
 
   const [flashcards, setFlashcards] = useState([])
+  const [image, setImage] = useState([])
   //flask api stuff
   
   // we expect data from flask API to look like this
@@ -52,6 +53,10 @@ export function Flashcards() {
         })
         setFlashcards(res.data.results)
         
+      })
+      axios.get('http://localhost:5000/deepai_image')
+      .then(res => {
+        setImage(res.output_url)
       })
     })
     .catch(err => {
