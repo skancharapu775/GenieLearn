@@ -1,21 +1,34 @@
 import React from 'react'
 import {Typography} from '@mui/material';
 import '../App.css'
+import { Grid, Button } from '@mui/material';
+import '../Style_Cards.css'
+import { useState } from 'react';
 
-export default function worksheet({ worksheet }) {
-  return (
-    <>
-    <div className="card-grid">
-        <h1>{worksheet[0][0]['id']}</h1>
+
+
+export default function Worksheet({ worksheet }) {
+    const [showText, setShowText] = useState(false);
+
+    return (
+   
+  <>
+    <div className="worksheet-problem-list">
+    <Button  onClick={() => setShowText(!showText)}>Reveal Answers</Button></div>
         {worksheet[0].map((postDetail, index) => {
             return (
                 <div className="worksheet-problem-list">
-                    <p className="worksheet-problem">{postDetail.id}, {postDetail.question}, {postDetail.answer}</p>
+                    <Grid>
+                        <h2> Problem Number {postDetail.id}</h2>
+                        <p>{postDetail.question}</p>
+                        <React.Fragment>
+                            {showText && <p>Answer: <b>{postDetail.answer}</b></p>}
+                        </React.Fragment>
+                    </Grid>
                 </div>
             )
             
         })}
-      </div>
     </>
   )
 }
