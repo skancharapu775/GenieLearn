@@ -4,7 +4,7 @@ from flask_cors import CORS
 import json
 from flashcards import *
 from worksheets import *
-from deepai import *
+# from deepai import *
 
 app = Flask(__name__)
 CORS(app)
@@ -76,6 +76,16 @@ def flashcards ():
         
             ALLCARDS.append(card)
 
+        '''
+        Generate image
+        json_response = generate_image(topic)
+
+        response format = {
+        'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9'
+        'output_url': 'https://api.deepai.org/job-view-file/e1a85509-1386-4f8d-9005-5d8f2ba659c9/outputs/output.jpg'
+        }
+        '''
+
         FLASHCARDS = {'response_code': 0, 'results': ALLCARDS}
         return (json.dumps(FLASHCARDS)) 
 
@@ -121,7 +131,8 @@ def worksheets ():
         num = number_problems
         topic = worksheet_topic
         
-        response = generate_sheet_response(topic, num, num * 50)
+
+        response = generate_sheet_response(topic, num, num * 100)
         text = response["choices"][0]["message"]["content"] 
         problem_pairs = problem_scraper(text, num)
 

@@ -22,7 +22,7 @@ chat_models = ["gpt-3.5-turbo"]
 completion_models = ["davinci", "curie", "babbage", "ada", "babbage:ft-personal:babbage-4-2023-04-08-13-57-22"]
 
 
-def generate_response(topic, num, max_tokens):
+def generate_card_response(topic, num, max_tokens):
     beg = "Create" + str(num) + " flash cards about "
     end = "in the format of Vocab word -> Answer"
     prompt = beg + topic + end
@@ -47,10 +47,8 @@ def generate_response(topic, num, max_tokens):
 
     return response
 
-def parse(text, num):
-    print(text)
+def card_scraper(text, num):
     text = text.replace('\n','')
-    # text.translate({ord('\n'): None})
     text = text.lstrip("1. ")
     
     flashcards = []
@@ -73,12 +71,13 @@ def parse(text, num):
         
     return flashcards
 
-response = generate_response("Spanish School Vocab", 10, 600)
+'''
+TESTING CODE
+
+response = generate_card_response("Spanish School Vocab", 10, 600)
 raw_text = response["choices"][0]["message"]["content"] 
 # text instead of content for gpt-3.0 models
-# raw_text = "1. Profesor -> Teacher\n2. Estudiante -> Student\n3. Clase -> Class\n4. Tarea -> Homework\n5. Examen -> Exam\n6. Escuela -> School"
-print(parse(raw_text, 10))
-#print(parse(raw_text))
-
-
-
+raw_text = "1. Profesor -> Teacher\n2. Estudiante -> Student\n3. Clase -> Class\n4. Tarea -> Homework\n5. Examen -> Exam\n6. Escuela -> School"
+print(card_scraper(raw_text, 10))
+print(card_scraper(raw_text))
+'''
