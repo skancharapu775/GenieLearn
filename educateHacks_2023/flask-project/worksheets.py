@@ -12,18 +12,27 @@ def createpdf(problems, answers, topic):
     sudo apt-get update
     sudo apt-get install xvfb libfontconfig wkhtmltopdf
     pip install pdfkit
-    pip install wkhtmltopdf
+    brew install wkhtmltopdf
     '''
-    title = topic
+    title = topic.title()
     
-    html_string = """<h1><b></b></h1>
-       <p>1st line ...</p>
-       <p>2nd line ...</p>
-       <p>3rd line ...</p>
-       <p>4th line ...</p>
-       """
+    
+    new_line = "<br>"
+    html_string = """<h1 style="text-align:center"><b>""" + title + " Practice Worksheet </b></h1>"
+    info_field = """<h3 style="text-align:center">Name: _______________   Date: _____________</h3>"""
+    html_string += info_field + new_line * 2
 
-    # for i in range(len(problems)):
+    for i in range(len(problems)):
+        line = "<h3>" + str(i+1) + ") " + problems[i] + "</h3>"
+        html_string += line + new_line * 2
+
+    html_string += new_line * 2
+    answer_title = """<h2 style="text-align:center">Answer Key</h2>"""
+    html_string += answer_title + new_line
+    for i in range(len(answers)):
+        line = """<h3 style="text-align:center">""" + str(i+1) + ": " + answers[i] + "</h3>"
+        html_string += line
+
     pdfname = "Practice_Worksheet.pdf"
     pdfkit.from_string(html_string, output_path = pdfname)
 
@@ -85,7 +94,10 @@ def problem_scraper(text, num):
         
     return problem_pairs
 
-print(createpdf("problem", "answer", "Spanish Food"))
+
+problems = ["1+1", "2+2", "5 x 4", "10/2", "1/0"]
+answers = ["2", "4", "20", "5", "undefined"]
+print("Successful: " + createpdf(problems, answers, "Spanish Food"))
 
 '''
 response = generate_sheet_response("Math", 2, 100)
