@@ -20,10 +20,9 @@ completion_models = ["davinci", "curie", "babbage", "ada", "babbage:ft-personal:
 
 def generate_card_response(topic, num, max_tokens):
     beg = "Create" + str(num) + " flash cards about "
-    end = "in the format of Vocab word -> Answer"
+    end = "in the format of Vocab Word -> Answer"
     prompt = beg + topic + end
     model = chat_models[0]
-
     
     response = openai.ChatCompletion.create(
         model=model,
@@ -45,25 +44,36 @@ def generate_card_response(topic, num, max_tokens):
 
 def card_scraper(text, num):
     text = text.replace('\n','')
-    char_sep = text[1]
+    if "Vocab Word: " not in text:    
+        char_sep = text[1]
+        text = text.lstrip("1" + char_sep + " ")
+    else:
+        char_sep = "Vocab Word: "
+        text = text.lstrip(char_sep)
     
-    text = text.lstrip("1" + char_sep + " ")
-    
+    if "Answer: " in text:
+        divider = "Answer: "
+    elif " -> " in text:
+        divider = " -> "
+        
     flashcards = []
     for i in range(2, (num + 1)):
-        seperator = str(i) + char_sep + " "
+        if char_sep == "Vocab Word: ":
+            seperator = "Vocab Word: "
+        else: 
+            seperator = str(i) + char_sep + " "
 
         texts = text.split(seperator)
         text = texts[1]
         phrase = texts[0]
 
-        card = phrase.split(" -> ")
+        card = phrase.split(divider)
         if len(card) != 0:
             flashcards.append(card)
         
         if i == num:
             phrase = texts[1]
-            card = phrase.split(" -> ")
+            card = phrase.split(divider)
             if len(card) != 0:
                 flashcards.append(card)
         
