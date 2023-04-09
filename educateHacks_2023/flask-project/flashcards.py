@@ -20,13 +20,13 @@ completion_models = ["davinci", "curie", "babbage", "ada", "babbage:ft-personal:
 
 def generate_card_response(topic, num, max_tokens):
     beg = "Create" + str(num) + " flash cards about "
-    end = "in the format of <Vocab Word> -> <Answer>"
+    end = "in the format of Vocab Word -> Answer"
     prompt = beg + topic + end
     model = chat_models[0]
     
     response = openai.ChatCompletion.create(
         model=model,
-        temperature=0.6,
+        temperature=1, #0.6
         max_tokens=max_tokens,
         messages = [{"role":"user", "content": prompt}]
     )
@@ -80,13 +80,14 @@ def card_scraper(text, num):
         
     return flashcards
 
-'''
-TESTING CODE
 
-response = generate_card_response("Spanish School Vocab", 10, 600)
-raw_text = response["choices"][0]["message"]["content"] 
+# TESTING CODE
+
+# response = generate_card_response("American Revolution", 10, 600)
+# raw_text = response["choices"][0]["message"]["content"] 
+# print(raw_text)
+# print(card_scraper(raw_text, 10))
 # text instead of content for gpt-3.0 models
-raw_text = "1. Profesor -> Teacher\n2. Estudiante -> Student\n3. Clase -> Class\n4. Tarea -> Homework\n5. Examen -> Exam\n6. Escuela -> School"
-print(card_scraper(raw_text, 10))
-print(card_scraper(raw_text))
-'''
+# raw_text = "1. Profesor -> Teacher\n2. Estudiante -> Student\n3. Clase -> Class\n4. Tarea -> Homework\n5. Examen -> Exam\n6. Escuela -> School"
+#print(card_scraper(raw_text, 10))
+#print(card_scraper(raw_text))

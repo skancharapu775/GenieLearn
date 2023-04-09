@@ -13,6 +13,7 @@ export function Flashcards() {
 
   const [flashcards, setFlashcards] = useState([])
   const [image, setImage] = useState([])
+  const [loading, setLoading] = useState(false)
   //flask api stuff
   
   // we expect data from flask API to look like this
@@ -71,6 +72,8 @@ export function Flashcards() {
     
     <>
     <Header />
+        <div className="flashcards-background">
+        <Box sx={{mt: 0}} className="body-content">
             <h3></h3>
             <div className="flashcard-form">
               <Typography
@@ -114,6 +117,8 @@ export function Flashcards() {
                 <FlashcardList image={image} flashcards={flashcards} />
               </div>
             </div>
+        </Box>
+        </div>
     </>
   );
 }

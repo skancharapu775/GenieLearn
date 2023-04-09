@@ -1,3 +1,5 @@
+
+
 .flashcard-form {
     display: flex;
     flex-direction: column;
@@ -47,7 +49,49 @@
 }
 
 .body-background {
-    background-image: url("https://images.unsplash.com/photo-1519680772-8b5e1b5e1b1a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3b8b2b2b2b2b2b2b2b2b2b2b2b2b2b2b&auto=format&fit=crop&w=1350&q=80");
+    background-repeat: no-repeat;
+    background-image: url("https://cdn.discordapp.com/attachments/915276863272800297/1094647315274399764/image.png");
+    background-size: cover;
+    opacity: 100%;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.about-background {
+    background-repeat: no-repeat;
+    background-image: url("https://cdn.discordapp.com/attachments/915276863272800297/1094657008772337684/image.png");
+    background-size: cover;
+    opacity: 100%;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.flashcards-background {
+    background-repeat: no-repeat;
+    background-image: url("https://cdn.discordapp.com/attachments/915276863272800297/1094656275209531452/image.png");
+    background-size: cover;
+    opacity: 100%;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.worksheets-background {
+    background-repeat: no-repeat;
+    background-image: url("https://cdn.discordapp.com/attachments/915276863272800297/1094656725543563264/image.png");
+    background-size: cover;
+    opacity: 100%;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -69,4 +113,8 @@
     padding: 20px;
     font-family: 'Roboto', sans-serif;
 
+}
+
+.white-text {
+    color: #f5f5f5
 }

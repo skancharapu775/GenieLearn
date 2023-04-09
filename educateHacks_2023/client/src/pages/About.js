@@ -1,12 +1,14 @@
 import Header from '../components/Header.js'
-import { Container, Typography, Stack, Button, Grid, Card, CardContent, CardActions } from '@mui/material'
+import { Box, Container, Typography, Stack, Button, Grid, Card, CardContent, CardActions } from '@mui/material'
 
 
 export function About() {
     return (
         <>
         <div>
-            <Header />
+          <Header />
+          <div className="about-background">
+          <Box sx={{mt: 0}} className="body-content">
             <Container fixed >
             <Typography
             sx = {{mt: 5}}
@@ -73,7 +75,10 @@ export function About() {
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
                 For exams which dont require memorization, hands on experience is the best way to prepare. On the worksheets page, students can generate practice problems for their upcoming tests, or teachers can generate worksheets for their students. 
             </Typography>
+            <p className="white-text">rgergreg</p>
           </Container>
+          </Box>
+          </div>
         </div>
     </>
     )

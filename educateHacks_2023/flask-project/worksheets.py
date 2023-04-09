@@ -19,7 +19,7 @@ def createpdf(problems, answers, topic):
     
     new_line = "<br>"
     html_string = """<h1 style="text-align:center"><b>""" + title + " Practice Worksheet </b></h1>"
-    info_field = """<h3 style="text-align:center">Name: _______________   Date: _____________</h3>"""
+    info_field = """<h3 style="text-align:center">Name: _____________________   Date: _____________</h3>"""
     html_string += info_field + new_line * 2
 
     for i in range(len(problems)):
@@ -40,14 +40,14 @@ def createpdf(problems, answers, topic):
 
 def generate_sheet_response(topic, num, max_tokens):
     beg = "Create" + str(num) + " practice problems on "
-    end = "in the format of <Question> -> <Answer>"
+    end = "in the format of Question -> Answer"
     prompt = beg + topic + end
     model = chat_models[0]
 
     
     response = openai.ChatCompletion.create(
         model=model,
-        temperature=0.6,
+        temperature=1,
         max_tokens=max_tokens,
         messages = [{"role":"user", "content": prompt}]
     )
@@ -60,6 +60,11 @@ def problem_scraper(text, num):
     
     text = text.lstrip("1" + char_sep + " ")
 
+    if " -> " in text:
+        divider = " -> "
+    elif "Answer: " in text:
+        divider = "Answer: "
+
     problem_pairs = []
     for i in range(2, (num + 1)):
         
@@ -71,20 +76,21 @@ def problem_scraper(text, num):
         phrase = texts[0]
 
 
-        pair = phrase.split("Answer: ")
+        pair = phrase.split(divider) # Answer: + " "
         
         if len(pair) != 0:
-            print(pair)
+            # print(pair)
             pair[0] = pair[0].rstrip(" ")
             pair[0] = pair[0].rstrip(".")
             pair[1] = pair[1].rstrip(" ")
             pair[1] = pair[1].rstrip(".")
+            # print("No error")
 
             problem_pairs.append(pair)
         
         if i == num:
             phrase = texts[1]
-            pair = phrase.split("Answer: ")
+            pair = phrase.split(divider) # Answer: + " "
             if len(pair) != 0:
                 pair[0] = pair[0].rstrip(" ")
                 pair[0] = pair[0].rstrip(".")
@@ -102,8 +108,10 @@ def problem_scraper(text, num):
 
 
 '''
-response = generate_sheet_response("Math", 2, 100)
+response = generate_sheet_response("Hyperbola", 5, 500)
 text = response["choices"][0]["message"]["content"]
 print(text)
-cards = problem_scraper(text, 2)
+print(problem_scraper(text, 5))
 '''
+
+

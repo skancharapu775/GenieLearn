@@ -29,7 +29,7 @@ export default function Worksheet({ worksheet }) {
             )
             
         })}
-        <a href="http://localhost:5000/pdf" download="Practice_Worksheet.pdf">
+        <a href="http://localhost:5000/pdf" target="_blank" download="Practice_Worksheet.pdf">
             <Button variant="contained">Download PDF</Button>
         </a>
     </>

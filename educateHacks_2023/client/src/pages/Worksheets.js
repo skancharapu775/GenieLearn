@@ -73,6 +73,8 @@ export function Worksheets() {
     
     <>
     <Header />
+    <div className="worksheets-background">
+    <Box sx={{mt: 0}} className="body-content">
     <Box sx = {{mt: 2}} className="flashcard-form">
             <Typography
                 component="h1"
@@ -112,11 +114,23 @@ export function Worksheets() {
                   </Box>
               </form>
         {(worksheet.length == 0) ? (
-          <></>
+          <>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+          </>
         ) : (
             <Worksheet worksheet={worksheet} />
         )}
     </Box>
+    </Box>
+    </div>
     </>
   );
 }

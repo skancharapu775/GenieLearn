@@ -6,7 +6,6 @@ from flashcards import *
 from worksheets import *
 from deepai import *
 from flask_restful import Resource, Api
-
 app = Flask(__name__)
 CORS(app)
 api = Api(app)

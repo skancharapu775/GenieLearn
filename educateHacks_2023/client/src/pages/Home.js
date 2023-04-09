@@ -4,12 +4,13 @@ import { Card, CardContent, CardActions, Grid } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 
+
 export function Home() {
     return (
         <>
-        <div className="body-background">
         <Header />
-        <Box sx={{mt: 2}} className="body-content">
+        <div className="body-background">
+        <Box sx={{mt: 0}} className="body-content">
 
             <h3></h3>
             <Container fixed >
@@ -85,6 +86,7 @@ export function Home() {
                 </Grid>
             </Grid>
           </Container>
+          <h3></h3>
           <h3></h3>
           <h3></h3>
           <h3></h3>

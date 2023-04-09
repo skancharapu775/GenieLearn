@@ -13,10 +13,11 @@ export default function Header() {
                         <IconButton size='large' edge='start' color='inherit' aria-label='logo'>
                             <SchoolIcon href="/home" />
                         </IconButton>
-                        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                        <Typography variant='h6' component='div' sx={{ flexGrow: 0 }}>
                             GenieLearn
                         </Typography>
-                        <Stack direction='row' spacing = {2}>
+                        <Stack direction='row' spacing = {1}>
+                            <Button color='inherit' href='/home'></Button>
                             <Button color='inherit' href='/home'>Home</Button>
                             <Button color='inherit' href='/about'>About</Button>
                             <Button color='inherit' href='/flashcards'>Flashcards</Button>

@@ -10,7 +10,14 @@ export default function FlashcardList({ image, flashcards }) {
       <img className="hide-text" width='200px' src={image}/>
       <div className="card-grid">
           {(flashcards.length == 0) ? (
-            <></>
+            <>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            <p className="white-text">werwerwer</p>
+            </>
           ) : (
             flashcards.map(flashcard => {
               return <Flashcard className="flashcard" flashcard={flashcard} key={flashcard.id} />
