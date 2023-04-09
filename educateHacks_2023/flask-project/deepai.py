@@ -7,8 +7,9 @@ def generate_image(input_text):
         'text': input_text,
     },
     headers={'api-key': 'quickstart-QUdJIGlzIGNvbWluZy4uLi4K'}
+    )
     return r.json()
-)
+    
 
 ''' 
 response format = {

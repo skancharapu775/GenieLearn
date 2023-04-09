@@ -12,10 +12,6 @@ pricing: https://openai.com/pricing#language-models
 models: https://platform.openai.com/docs/models/gpt-3-5
 '''
 
-'''
-Flashcard format:
-
-'''
 
 openai.api_key = keys.API_KEY
 chat_models = ["gpt-3.5-turbo"]
