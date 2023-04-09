@@ -23,14 +23,14 @@ def createpdf(problems, answers, topic):
     html_string += info_field + new_line * 2
 
     for i in range(len(problems)):
-        line = "<h3>" + str(i+1) + ") " + problems[i] + "</h3>"
+        line = "<h3>" + str(i+1) + ") " + problems[i]["question"] + "</h3>"
         html_string += line + new_line * 2
 
     html_string += new_line * 2
     answer_title = """<h2 style="text-align:center">Answer Key</h2>"""
     html_string += answer_title + new_line
     for i in range(len(answers)):
-        line = """<h3 style="text-align:center">""" + str(i+1) + ": " + answers[i] + "</h3>"
+        line = """<h3 style="text-align:center">""" + str(i+1) + ": " + problems[i]["answer"] + "</h3>"
         html_string += line
 
     pdfname = "Practice_Worksheet.pdf"
@@ -40,7 +40,7 @@ def createpdf(problems, answers, topic):
 
 def generate_sheet_response(topic, num, max_tokens):
     beg = "Create" + str(num) + " practice problems on "
-    end = "in the format of Question -> Answer"
+    end = "in the format of <Question> -> <Answer>"
     prompt = beg + topic + end
     model = chat_models[0]
 
@@ -62,12 +62,14 @@ def problem_scraper(text, num):
 
     problem_pairs = []
     for i in range(2, (num + 1)):
+        
         seperator = str(i) + char_sep + " "
 
         texts = text.split(seperator)
         print(text)
         text = texts[1]
         phrase = texts[0]
+
 
         pair = phrase.split("Answer: ")
         
@@ -93,11 +95,11 @@ def problem_scraper(text, num):
         
     return problem_pairs
 
-'''
-problems = ["1+1", "2+2", "5 x 4", "10/2", "1/0"]
-answers = ["2", "4", "20", "5", "undefined"]
-print("Successful: " + createpdf(problems, answers, "Spanish Food"))
-'''
+
+#problems = ["1+1", "2+2", "5 x 4", "10/2", "1/0"]
+#answers = ["2", "4", "20", "5", "undefined"]
+#print("Successful: " + createpdf(problems, answers, "Spanish Food"))
+
 
 '''
 response = generate_sheet_response("Math", 2, 100)

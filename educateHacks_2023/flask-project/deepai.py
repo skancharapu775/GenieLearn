@@ -11,6 +11,7 @@ def generate_image(input_text):
     return r.json()
     
 
+# print(generate_image("Hi"))
 ''' 
 response format = {
  'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9'

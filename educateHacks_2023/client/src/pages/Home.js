@@ -1,13 +1,16 @@
 import Header from '../components/Header.js'
 import { Container, Typography, Stack, Button } from '@mui/material'
 import { Card, CardContent, CardActions, Grid } from '@mui/material'
+import { Box } from '@mui/system'
 import React from 'react'
 
 export function Home() {
     return (
         <>
-        <div>
-            <Header />
+        <div className="body-background">
+        <Header />
+        <Box sx={{mt: 2}} className="body-content">
+
             <h3></h3>
             <Container fixed >
             <Typography
@@ -82,6 +85,11 @@ export function Home() {
                 </Grid>
             </Grid>
           </Container>
+          <h3></h3>
+          <h3></h3>
+          <h3></h3>
+          <h3></h3>
+        </Box>
         </div>
     </>
     )

@@ -54,9 +54,10 @@ export function Flashcards() {
         setFlashcards(res.data.results)
         
       })
-      axios.get('http://localhost:5000/deepai_image')
+      axios.get('http://localhost:5000/flashcards')
       .then(res => {
-        setImage(res.output_url)
+        console.log('res.data.url', res.data.url)
+        setImage(res.data.url)
       })
     })
     .catch(err => {
@@ -110,7 +111,7 @@ export function Flashcards() {
                   </Box>
               </form>
               <div className="container">
-                <FlashcardList flashcards={flashcards} />
+                <FlashcardList image={image} flashcards={flashcards} />
               </div>
             </div>
     </>

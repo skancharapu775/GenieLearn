@@ -5,9 +5,18 @@ import json
 from flashcards import *
 from worksheets import *
 from deepai import *
+from flask_restful import Resource, Api
 
 app = Flask(__name__)
 CORS(app)
+api = Api(app)
+
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  return response
 
 flashcard_number = 0
 flashcard_topic = ''
@@ -83,11 +92,25 @@ def flashcards ():
 
         response format = {
         'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9'
-        'output_url': 'https://api.deepai.org/job-view-file/e1a85509-1386-4f8d-9005-5d8f2ba659c9/outputs/output.jpg'
+        'output_url': 'https://api.deepai.org/job-view-file/82b409d1-a82a-459b-a00f-66973456c369/outputs/output.jpg'
         }
         '''
+        
+        if topic != '':
+            #json_response = generate_image(topic)
+            json_response = {
+        'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9',
+        'output_url': 'https://api.deepai.org/job-view-file/82b409d1-a82a-459b-a00f-66973456c369/outputs/output.jpg'
+        }
+        else:
+            json_response = {
+        'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9',
+        'output_url': 'https://api.deepai.org/job-view-file/82b409d1-a82a-459b-a00f-66973456c369/outputs/output.jpg'
+        }
+        print(topic)
+        print(json_response)
 
-        FLASHCARDS = {'response_code': 0, 'results': ALLCARDS}
+        FLASHCARDS = {'response_code': 0, 'results': ALLCARDS, 'url': json_response['output_url']}
         return (json.dumps(FLASHCARDS)) 
 
 # worksheet requests
@@ -173,12 +196,14 @@ def pdf():
             return send_file('Practice_Worksheet.pdf')
         
 @app.route('/deepai_image', methods=['GET'])
-def pdf():
+def deepai_image():
 
     global worksheet_topic
     if request.method == 'GET':
         topic = worksheet_topic
         json_response = generate_image(topic)
+        print(topic)
+        print(json_response)
         return(json_response)
 
         # response format = {

@@ -20,7 +20,7 @@ completion_models = ["davinci", "curie", "babbage", "ada", "babbage:ft-personal:
 
 def generate_card_response(topic, num, max_tokens):
     beg = "Create" + str(num) + " flash cards about "
-    end = "in the format of Vocab Word -> Answer"
+    end = "in the format of <Vocab Word> -> <Answer>"
     prompt = beg + topic + end
     model = chat_models[0]
     
@@ -64,6 +64,7 @@ def card_scraper(text, num):
             seperator = str(i) + char_sep + " "
 
         texts = text.split(seperator)
+        print(texts)
         text = texts[1]
         phrase = texts[0]
 

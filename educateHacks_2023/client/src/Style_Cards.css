@@ -64,7 +64,8 @@ body {
   }
   
   .card .front {
-    left: 0;
+    justify-content: center;
+    font-size: x-large;
   }
   
   .card .front,
