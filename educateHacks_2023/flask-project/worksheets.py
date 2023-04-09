@@ -55,51 +55,70 @@ def generate_sheet_response(topic, num, max_tokens):
     return response
 
 def problem_scraper(text, num):
-    text = text.replace('\n','')
-    char_sep = text[1]
-    
-    text = text.lstrip("1" + char_sep + " ")
+    if "Q: " in text and "A: " in text:
+        text = text.lstrip("Q: ")
+        texts = text.split("Q: ")
 
-    if " -> " in text:
-        divider = " -> "
-    elif "Answer: " in text:
-        divider = "Answer: "
+        problem_pairs = []
+        for QA_com in texts:
+            pair = QA_com.split("A: ")
 
-    problem_pairs = []
-    for i in range(2, (num + 1)):
-        
-        seperator = str(i) + char_sep + " "
-
-        texts = text.split(seperator)
-        print(text)
-        text = texts[1]
-        phrase = texts[0]
-
-
-        pair = phrase.split(divider) # Answer: + " "
-        
-        if len(pair) != 0:
-            # print(pair)
-            pair[0] = pair[0].rstrip(" ")
-            pair[0] = pair[0].rstrip(".")
-            pair[1] = pair[1].rstrip(" ")
-            pair[1] = pair[1].rstrip(".")
-            # print("No error")
-
-            problem_pairs.append(pair)
-        
-        if i == num:
-            phrase = texts[1]
-            pair = phrase.split(divider) # Answer: + " "
             if len(pair) != 0:
+                    pair[0] = pair[0].rstrip(" ")
+                    pair[0] = pair[0].rstrip(".")
+                    pair[1] = pair[1].rstrip(" ")
+                    pair[1] = pair[1].rstrip(".")
+
+                    problem_pairs.append(pair)
+        return problem_pairs
+        
+        
+    else:
+        text = text.replace('\n','')
+        char_sep = text[1]
+        
+        text = text.lstrip("1" + char_sep + " ")
+
+        if " -> " in text:
+            divider = " -> "
+        elif "Answer: " in text:
+            divider = "Answer: "
+
+        problem_pairs = []
+        for i in range(2, (num + 1)):
+            
+            seperator = str(i) + char_sep + " "
+
+            texts = text.split(seperator)
+            print(text)
+            text = texts[1]
+            phrase = texts[0]
+
+
+            pair = phrase.split(divider) # Answer: + " "
+            
+            if len(pair) != 0:
+                # print(pair)
                 pair[0] = pair[0].rstrip(" ")
                 pair[0] = pair[0].rstrip(".")
                 pair[1] = pair[1].rstrip(" ")
                 pair[1] = pair[1].rstrip(".")
+                # print("No error")
 
                 problem_pairs.append(pair)
-        
-    return problem_pairs
+            
+            if i == num:
+                phrase = texts[1]
+                pair = phrase.split(divider) # Answer: + " "
+                if len(pair) != 0:
+                    pair[0] = pair[0].rstrip(" ")
+                    pair[0] = pair[0].rstrip(".")
+                    pair[1] = pair[1].rstrip(" ")
+                    pair[1] = pair[1].rstrip(".")
+
+                    problem_pairs.append(pair)
+            
+        return problem_pairs
 
 
 #problems = ["1+1", "2+2", "5 x 4", "10/2", "1/0"]

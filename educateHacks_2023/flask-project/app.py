@@ -91,7 +91,7 @@ def flashcards ():
 
         response format = {
         'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9'
-        'output_url': 'https://api.deepai.org/job-view-file/82b409d1-a82a-459b-a00f-66973456c369/outputs/output.jpg'
+        'output_url': 'https://api.deepai.org/job-view-file/2c30a9dd-fd00-4b16-9fab-fccf54352b08/outputs/output.jpg'
         }
         '''
         
@@ -99,12 +99,12 @@ def flashcards ():
             #json_response = generate_image(topic)
             json_response = {
         'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9',
-        'output_url': 'https://api.deepai.org/job-view-file/82b409d1-a82a-459b-a00f-66973456c369/outputs/output.jpg'
+        'output_url': 'https://api.deepai.org/job-view-file/2c30a9dd-fd00-4b16-9fab-fccf54352b08/outputs/output.jpg'
         }
         else:
             json_response = {
         'id': 'e1a85509-1386-4f8d-9005-5d8f2ba659c9',
-        'output_url': 'https://api.deepai.org/job-view-file/82b409d1-a82a-459b-a00f-66973456c369/outputs/output.jpg'
+        'output_url': 'https://api.deepai.org/job-view-file/2c30a9dd-fd00-4b16-9fab-fccf54352b08/outputs/output.jpg'
         }
         print(topic)
         print(json_response)
